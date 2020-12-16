@@ -1,25 +1,3 @@
-// const Book = require("../models/book");
-
-// module.exports = {
-//     create,
-//     index
-// };
-
-// function create(req, res) {
-//     req.body.read = !!req.body.read
-//     Book.create(req.body)
-//     .then(() => {
-//         res.redirect("/books");
-//     });
-// };
-
-
-// function index(req, res) {
-//     Book.find({}, (err, books) => {
-//         res.render("books", {books});
-//     });
-// };
-
 const Book = require("../models/book");
 
 module.exports = {
@@ -27,13 +5,15 @@ module.exports = {
     index,
     show,
     delete: deleteBook,
+    update
 };
 
+
 function create(req, res){
-    req.body.watched = req.body.watched === 'on' ? true : false
+    req.body.read = req.body.read === 'on' ? true : false
     Book.create(req.body)
-    .then((book)=> {
-        res.redirect('/books', {book})
+    .then(()=> {
+        res.redirect('/books')
     });
 };
 
@@ -52,5 +32,12 @@ function show(req, res) {
 function deleteBook(req, res) {
     Book.findByIdAndDelete(req.params.id, (err, book) => {
         res.redirect("/books")
+    })
+};
+
+function update(req, res) {
+    req.body.read = !!req.body.read
+    Book.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, book) => {
+        res.redirect(`/books/${book._id}`)
     })
 };

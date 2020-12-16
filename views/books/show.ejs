@@ -9,5 +9,17 @@
     <h1>This is the show page</h1>
     <%= book.title %>
     <%= book.read %>
+
+    <form action="/books/<%= book._id %>?_method=PUT" method="POST">
+        <input type="text" name="title" required placeholder="Please write your book title">
+            <label>Read?</label>
+            <input type="checkbox" name="read">
+            <button type="submit">UPDATE BOOK</button>
+    </form>
+
+
+    <a href="/books">All books</a>
+    <a href="/books">New book</a>
+    <a href="/">Home page</a>
 </body>
 </html>
